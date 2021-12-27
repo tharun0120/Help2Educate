@@ -9,6 +9,8 @@ import AttributionsPage from "./components/AttributionsPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import LoginSuccess from "./components/LoginSuccess";
+import Detail from "./components/Detail";
 
 function App() {
   return (
@@ -18,13 +20,21 @@ function App() {
           <Route exact path="/">
             <LandingPage />
           </Route>
-
+          <Route exact path="/login/success">
+            <LoginSuccess />
+          </Route>
+          <Route exact path="/login/failed">
+            <ErrorPage />
+          </Route>
           <Route path="/donate">
             <DonateResourcePage />
           </Route>
 
           <Route path="/receive">
             <FindResourcesPage />
+          </Route>
+          <Route path="/donation/:id">
+            <Detail />
           </Route>
 
           <Route path="/signin">

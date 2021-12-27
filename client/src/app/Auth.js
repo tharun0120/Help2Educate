@@ -30,29 +30,11 @@ class AuthClass {
   }
 
   signInGoogle() {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await fetch("api/auth/google/", {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          mode: "no-cors",
-        });
-        await response.json().then((data) => {
-          console.log(data);
-          if (response.status === 200) {
-            localStorage.setItem("token", data.token);
-            resolve(data);
-          } else {
-            reject(data);
-          }
-        });
-      } catch (error) {
-        reject(error);
-      }
-    });
+    window.open(
+      "http://localhost:3000/api/auth/google",
+      "_blank",
+      " width=500.height=600"
+    );
   }
 
   signUp({ firstName, lastName, email, password }) {

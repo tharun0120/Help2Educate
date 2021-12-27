@@ -3,6 +3,8 @@ const User = require("../models/users");
 const passport = require("passport");
 const ensureAuthLocal = require("../middleware/ensureAuth");
 
+const CLIENT_HOME_PAGE_URL = "http://localhost:3001/login/success";
+
 //register
 router.post("/register", async (req, res) => {
   //   res.send("register");
@@ -67,29 +69,32 @@ router.get(
   })
 );
 
-// router.get("/login/success", ensureAuthLocal, async (req, res) => {
-//   const token = req.user.tokens[req.user.tokens.length - 1].token;
-//   const user = req.user;
-//   console.log(user, token);
-//   res.send({ user, token });
-//   res.redirect("http://localhost:3001/");
-// });
-
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "localhost:3001/",
-    failureRedirect: "/login/failure",
+    successRedirect: CLIENT_HOME_PAGE_URL,
+    failureRedirect: "http://localhost:3001/login/failed",
   }),
   (req, res) => {
-    console.log(req);
     const token = req.user.tokens[req.user.tokens.length - 1].token;
     const user = req.user;
     console.log(user, token);
+    localStorage.setItem("token", token);
     res.send({ user, token });
-    // res.redirect("http://localhost:3001/");
   }
 );
+
+// twitter
+// router.get("/twitter", passport.authenticate("twitter"));
+
+// redirect to home page after successfully login via twitter
+// router.get(
+//   "/twitter/redirect",
+//   passport.authenticate("twitter", {
+//     successRedirect: CLIENT_HOME_PAGE_URL,
+//     failureRedirect: "/auth/login/failed",
+//   })
+// );
 
 //facebook
 // router.get("/facebook", passport.authenticate("facebook"));

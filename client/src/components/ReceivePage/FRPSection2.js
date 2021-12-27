@@ -8,6 +8,7 @@ import {
   selectDonations,
   clearDonationState,
 } from "../../features/donations/donationSlice";
+import { Link } from "react-router-dom";
 
 const FRPSection2 = () => {
   const dispatch = useDispatch();
@@ -50,7 +51,9 @@ const FRPSection2 = () => {
                       <Card.Img variant="top" src={image} />
                       <Card.Body>
                         <Card.Title>{item.item_name}</Card.Title>
-                        <Button variant="warning">Know More</Button>
+                        <Link to={`/donation/${item._id}`}>
+                          <Button variant="warning">Know More</Button>
+                        </Link>
                       </Card.Body>
                     </Card>
                   </Col>

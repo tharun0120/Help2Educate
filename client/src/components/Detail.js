@@ -1,9 +1,30 @@
+import React, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { Carousel, Container } from "react-bootstrap";
 import NavBar from "./NavBar";
-import imag from "./Assets/present.png";
+import imag from "./Assets/present-5442902_1920.png";
 import image from "./Assets/pencils.png";
 
 const Detail = () => {
+  const { id } = useParams();
+  const history = useHistory();
+  const [donation, setDonation] = useState();
+  useEffect(() => {
+    const getDonation = async () => {
+      const response = await fetch(`/api/donations/${id}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      if (response) {
+        await response.json().then((data) => [setDonation(data)]);
+      } else history.push("/nope");
+    };
+    getDonation();
+  }, []); //eslint-disable-line
   return (
     <Container
       fluid="full"
@@ -46,17 +67,17 @@ const Detail = () => {
                   marginBottom: "10px",
                   padding: "10px",
                 }}>
-                <div className="h2 itemName">{"Pencils"}</div>
+                <div className="h2 itemName">{donation?.item_name}</div>
                 <br />
-                <div className="donorName">Donor Name : &nbsp; {"Jacob"}</div>
-                <div className="cat">Category : &nbsp; {"Stationery"}</div>
-                <div className="addr">
-                  Address : &nbsp; {"414, Santa Steet, Atalanta City"}
+                <div className="donorName">
+                  Donor Name : &nbsp; {donation?.donor_name}
                 </div>
-                <div className="email">
-                  Email : &nbsp; {"jacob231@gmail.com"}
+                <div className="cat">
+                  Category : &nbsp; {donation?.item_type}
                 </div>
-                <div className="phone">Phone : &nbsp; {"xxx xxxxx xxxxx"}</div>
+                <div className="addr">Address : &nbsp; {donation?.address}</div>
+                <div className="email">Email : &nbsp; {donation?.email}</div>
+                <div className="phone">Phone : &nbsp; {donation?.contact}</div>
               </div>
               <div className="sendMail">
                 <div

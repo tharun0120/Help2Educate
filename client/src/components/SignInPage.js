@@ -58,7 +58,6 @@ function SignInPage() {
 
   const signInGoogle = () => {
     dispatch(signInWithGoogle());
-    window.open("http://localhost:3000/api/auth/google", "_self");
   };
 
   const onSubmit = (e) => {
@@ -160,7 +159,7 @@ function SignInPage() {
                       Home
                     </Button>
                   </Link>
-                  <Button
+                  {/* <Button
                     className="btn btn-primary mt-2"
                     onClick={signInGoogle}
                     style={{
@@ -172,7 +171,7 @@ function SignInPage() {
                       width: "100%",
                     }}>
                     Sign in with Google
-                  </Button>
+                  </Button> */}
 
                   <center>
                     <i

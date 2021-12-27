@@ -84,7 +84,7 @@ function NavBar(props) {
             </Nav.Link>{" "}
             &nbsp;&nbsp;
             <Nav.Link href="">
-              {showlogin ? (
+              {user && showlogin ? (
                 <Link
                   to="/signin"
                   style={{ color: "#153A2D", textDecoration: "none" }}>
