@@ -9,9 +9,7 @@ function NavBar(props) {
   const { isLoggedIn, isSuccess } = useSelector(selectUser);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(isLoggedIn);
-  }, [isLoggedIn, isSuccess]); //eslint-disable-line
+  useEffect(() => {}, [isLoggedIn, isSuccess]); //eslint-disable-line
 
   const onSignOut = () => {
     dispatch(signOut());
