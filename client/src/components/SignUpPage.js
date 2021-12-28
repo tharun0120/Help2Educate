@@ -217,7 +217,7 @@ function SignUpPage() {
                       }}>
                       <br />
                       <Link
-                        to="/SigninPage"
+                        to="/signin"
                         style={{ textDecoration: "none", color: "#FFF" }}>
                         Aldready have an account ? Sign In.
                       </Link>

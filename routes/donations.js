@@ -24,6 +24,8 @@ router.post("/enlist", ensureAuthLocal, async (req, res) => {
       ...req.body,
       owner_id: req.user._id,
     });
+    console.log(donation);
+
     await donation.save();
     res.status(201).send(donation);
   } catch (err) {
@@ -147,40 +149,6 @@ router.get("/:id", ensureAuthLocal, async (req, res) => {
     res.status(200).send(donation);
   } catch (error) {
     res.status(500).send(error);
-  }
-});
-
-router.post(
-  "/images",
-  ensureAuthLocal,
-  upload.single("images"),
-  async (req, res) => {
-    const buffer = await sharp(req.file.buffer)
-      .resize({ width: 300, height: 300 })
-      .png()
-      .toBuffer();
-
-    req.donation.images = req.donation.images.concat({ buffer });
-    await req.donation.save();
-    res.send();
-  },
-  (error, req, res, next) => {
-    res.status(400).send({ error: error.message });
-  }
-);
-
-router.get("/:id/images", ensureAuthLocal, async (req, res) => {
-  try {
-    const donation = await donations.findById(req.params.id);
-
-    if (!user || !user.images) {
-      throw new Error("No images to Show");
-    }
-
-    res.set("Content-Type", "image/png");
-    res.send(donation.images);
-  } catch (error) {
-    res.status(404).send();
   }
 });
 

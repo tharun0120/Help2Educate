@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema(
       },
     ],
     avatar: {
-      type: String,
+      type: Buffer,
     },
     googleID: {
       type: String,

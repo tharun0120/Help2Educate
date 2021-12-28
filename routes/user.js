@@ -70,7 +70,7 @@ router.delete("/me", ensureAuthLocal, async (req, res) => {
 router.post(
   "/me/avatar",
   ensureAuthLocal,
-  upload.single("avatars"),
+  upload.single("avatar"),
   async (req, res) => {
     const buffer = await sharp(req.file.buffer)
       .resize({ width: 300, height: 300 })
@@ -79,17 +79,19 @@ router.post(
 
     req.user.avatar = buffer;
     await req.user.save();
-    res.send();
+    res.status(201).send({ message: "Avatar uploaded successfully" });
   },
   (error, req, res, next) => {
-    res.status(400).send({ error: error.message });
+    res.status(400).send({ error: error });
   }
 );
 
 router.delete("/me/avatar", ensureAuthLocal, async (req, res) => {
   try {
-    const seed = "fhlsdkfjdshfdsjlhfjdkslhfdsjhfls";
-    req.user.avatar = `https://avatars.dicebear.com/api/pixel-art-neutral/${seed}.svg?mood[]=happy`;
+    // const seed = "fhlsdkfjdshfdsjlhfjdkslhfdsjhfls";
+    // req.user.avatar = `https://avatars.dicebear.com/api/pixel-art-neutral/${seed}.svg?mood[]=happy`;
+    // await req.user.save();
+    req.user.avatar = undefined;
     await req.user.save();
     res.send({ message: "Profile Avatar Deleted" });
   } catch (error) {

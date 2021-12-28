@@ -18,6 +18,12 @@ function DRPSection2() {
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
   const [address, setAddress] = useState("");
+  const [image, setImage] = useState([]);
+
+  const onAddImage = (e) => {
+    const imageNow = URL.createObjectURL(e.target.files[0]);
+    setImage([...image, imageNow]);
+  };
 
   useEffect(() => {
     if (isError) {
@@ -25,7 +31,7 @@ function DRPSection2() {
       dispatch(clearDonationState());
       return;
     }
-  }, [isError, isSuccess]); //eslint-disable-line
+  }, [isError, isSuccess, image]); //eslint-disable-line
 
   const setDonations = (donation) => {
     dispatch(createDonation(donation));
@@ -200,17 +206,51 @@ function DRPSection2() {
               </label>
             </Form.Floating>
 
-            <Button
-              className="btn btn-primary mt-2"
+            <div
               style={{
-                backgroundColor: "#FFC107",
-                borderColor: "#FFC107",
-                color: "#153A2D",
-                fontWeight: "600",
-                fontSize: "20px",
+                display: "flex",
+                justifyContent: "space-between",
+                padding: "10px",
+                flexDirection: "column",
               }}>
-              Add a Display Image
-            </Button>
+              {image && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "start",
+                    flexWrap: "wrap",
+                    width: "100vw",
+                  }}>
+                  {image.map((i) => {
+                    return (
+                      <img
+                        src={i}
+                        key={i}
+                        alt={i}
+                        style={{
+                          objectFit: "contain",
+                          width: "150px",
+                          height: "150px",
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              )}
+              <input
+                type="file"
+                className="btn btn-primary mt-2"
+                onChange={onAddImage}
+                style={{
+                  backgroundColor: "#FFC107",
+                  borderColor: "#FFC107",
+                  color: "#153A2D",
+                  fontWeight: "600",
+                  fontSize: "20px",
+                }}
+                placeholder="Add a Display Image"
+              />
+            </div>
             <br />
             <Button
               onClick={onListDonation}

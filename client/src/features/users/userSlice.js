@@ -6,6 +6,7 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isFetching: false,
+  isLoggedIn: false,
   error: [],
 };
 
@@ -81,6 +82,7 @@ const userSlice = createSlice({
       state.user = null;
       state.isSuccess = false;
       state.isError = false;
+      state.isLoggedIn = false;
       state.error = "";
     },
   },
@@ -95,6 +97,7 @@ const userSlice = createSlice({
       state.isFetching = false;
       state.isSuccess = true;
       state.isError = false;
+      state.isLoggedIn = true;
       state.user = payload.user;
     },
     [signIn.rejected]: (state, { payload }) => {
@@ -114,6 +117,7 @@ const userSlice = createSlice({
       state.isFetching = false;
       state.isSuccess = true;
       state.isError = false;
+      state.isLoggedIn = true;
       state.user = payload.user;
     },
     [signInWithGoogle.rejected]: (state, { payload }) => {
@@ -132,6 +136,7 @@ const userSlice = createSlice({
       state.isFetching = false;
       state.isSuccess = true;
       state.isError = false;
+      state.isLoggedIn = true;
       state.user = payload.user;
     },
     [signUp.rejected]: (state, { payload }) => {
@@ -150,6 +155,7 @@ const userSlice = createSlice({
       state.isFetching = false;
       state.isSuccess = true;
       state.isError = false;
+      state.isLoggedIn = false;
       state.user = null;
     },
     [signOut.rejected]: (state, { payload }) => {
@@ -168,6 +174,7 @@ const userSlice = createSlice({
       state.isFetching = false;
       state.isSuccess = true;
       state.isError = false;
+      state.isLoggedIn = true;
       state.user = payload;
     },
     [isLoggedIn.rejected]: (state) => {

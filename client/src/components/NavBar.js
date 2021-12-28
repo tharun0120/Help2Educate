@@ -1,25 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser, signOut } from "../features/users/userSlice";
+import { clearState, selectUser, signOut } from "../features/users/userSlice";
 import { toast } from "react-toastify";
 
 function NavBar(props) {
-  const { user, isSuccess } = useSelector(selectUser);
+  const { isLoggedIn, isSuccess } = useSelector(selectUser);
   const dispatch = useDispatch();
-  const [showlogin, setshowlogin] = useState(true);
 
   useEffect(() => {
-    if (user) setshowlogin(true);
-    if (isSuccess) setshowlogin(false);
-  }, [user, showlogin]); //eslint-disable-line
+    console.log(isLoggedIn);
+  }, [isLoggedIn, isSuccess]); //eslint-disable-line
 
   const onSignOut = () => {
     dispatch(signOut());
-    if (isSuccess) {
-      setshowlogin(true);
+    if (isLoggedIn) {
       toast.success("Logged out Successfully!!!");
+      dispatch(clearState());
     }
   };
   return (
@@ -84,15 +82,11 @@ function NavBar(props) {
             </Nav.Link>{" "}
             &nbsp;&nbsp;
             <Nav.Link href="">
-              {user && showlogin ? (
+              {!isLoggedIn ? (
                 <Link
                   to="/signin"
                   style={{ color: "#153A2D", textDecoration: "none" }}>
                   <button
-                    onClick={() => {
-                      console.log(showlogin);
-                      setshowlogin(false);
-                    }}
                     className="btn btn-primary"
                     style={{
                       color: "#153A2D",
@@ -108,7 +102,6 @@ function NavBar(props) {
                 <button
                   className="btn btn-primary"
                   onClick={() => {
-                    console.log(showlogin);
                     onSignOut();
                   }}
                   style={{
