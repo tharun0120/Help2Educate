@@ -18,7 +18,7 @@ class AuthClass {
         await response.json().then((data) => {
           if (response.status === 200) {
             localStorage.setItem("token", data.token);
-            resolve(data);
+            resolve(data.user);
           } else {
             reject(data);
           }
@@ -58,7 +58,7 @@ class AuthClass {
         await response.json().then((data) => {
           if (response.status === 201) {
             localStorage.setItem("token", data.token);
-            resolve(data);
+            resolve(data.user);
           } else {
             reject(data);
           }
@@ -108,7 +108,7 @@ class AuthClass {
           });
           await response.json().then((data) => {
             if (response.status === 200) {
-              resolve(data);
+              resolve(data.user);
             } else {
               reject(data);
             }

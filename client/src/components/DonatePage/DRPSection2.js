@@ -7,18 +7,25 @@ import {
   selectDonations,
   clearDonationState,
 } from "../../features/donations/donationSlice";
+import { selectUser } from "../../features/users/userSlice";
 // import axios from "axios";
 
 function DRPSection2() {
   const dispatch = useDispatch();
   const { isSuccess, isError, error } = useSelector(selectDonations);
-  const [donor_name, setDonorName] = useState("");
+  const { user } = useSelector(selectUser);
+  console.log(user);
+  const [donor_name, setDonorName] = useState(`${user?.displayName}`);
   const [item_name, setItemName] = useState("");
   const [item_type, setItemType] = useState("");
   const [description, setDescription] = useState("");
-  const [email, setEmail] = useState("");
-  const [contact, setContact] = useState("");
-  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState(`${user?.email}`);
+  const [contact, setContact] = useState(
+    `${user?.contact ? user.contact : ""}`
+  );
+  const [address, setAddress] = useState(
+    `${user?.address ? user.address : ""}`
+  );
   const [image, setImage] = useState([]);
   const [imageBuffer, setImageBuffer] = useState([]);
 
@@ -156,13 +163,16 @@ function DRPSection2() {
             </Form.Floating>
 
             <Form.Floating className="my-2">
-              <Form.Control
-                id="DRPDonationCategory"
-                type="Name"
-                placeholder="Name"
-                value={item_type}
-                onChange={(e) => setItemType(e.target.value)}
-              />
+              <Form.Select
+                name="category"
+                id="category"
+                onChange={(e) => setItemType(e.target.value)}>
+                <option></option>
+                <option value="Stationary">Stationary</option>
+                <option value="Other">Other</option>
+                <option value="Supplies">Supplies</option>
+                <option value="Books">Books</option>
+              </Form.Select>
               <label
                 htmlFor="floatingInputCustom"
                 style={{ color: "darkgrey" }}>

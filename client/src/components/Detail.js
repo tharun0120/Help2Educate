@@ -59,21 +59,18 @@ const Detail = () => {
             className="d-flex flex-row justify-content-center pb-5"
             style={{ color: "white", fontWeight: "600", display: "block" }}>
             <div className="col-lg-9 col-md-12">
-              <Carousel
-                variant="dark"
-                style={{ width: "300px", height: "300px" }}>
+              <Carousel variant="dark">
                 {donation ? (
                   donation?.images.map((item) => {
                     return (
                       <Carousel.Item>
-                        {}
                         <img
-                          className="d-block "
+                          className="d-block w-100"
                           src={`data:image/png;base64,${arrayBufferToBase64(
                             item
                           )}`}
                           alt="First slide"
-                          style={{ maxHeight: "300px", objectFit: "contain" }}
+                          style={{ maxHeight: "400px", objectFit: "cover" }}
                         />
                       </Carousel.Item>
                     );
@@ -81,10 +78,10 @@ const Detail = () => {
                 ) : (
                   <Carousel.Item>
                     <img
-                      className="d-block "
+                      className="d-block w-100"
                       src={image}
                       alt="First slide"
-                      style={{ maxHeight: "300px", objectFit: "contain" }}
+                      style={{ maxHeight: "400px", objectFit: "contain" }}
                     />
                   </Carousel.Item>
                 )}
@@ -123,51 +120,98 @@ const Detail = () => {
                   {donation?.item_name}
                 </h2>
                 <br />
-                <div
+                {/* <div
                   style={{
                     display: "flex",
                     gap: "10px",
                     flexDirection: "column",
                   }}>
                   <div>
-                    <label>Donor Name: </label>
+                    <label>Donor Nme: </label>
                     <span style={{ marginLeft: "10px" }}>
                       {donation?.donor_name}
                     </span>
                   </div>
                   <div>
-                    <label>Category: </label>
+                    <label>Categor: </label>
                     <span style={{ marginLeft: "10px" }}>
                       {donation?.item_type}
                     </span>
                   </div>
                   <div>
-                    <label>Description: </label>
+                    <label>Descripion: </label>
                     <span style={{ marginLeft: "10px" }}>
                       {donation?.description}
                     </span>
                   </div>
                   <div>
-                    <label>Address: </label>
+                    <label>Address </label>
                     <span style={{ marginLeft: "10px" }}>
                       {donation?.address}
                     </span>
                   </div>
                   <div>
-                    <label>Email: </label>
+                    <label>Email: /label>
                     <span style={{ marginLeft: "10px" }}>
                       {donation?.email}
                     </span>
                   </div>
                   <div>
-                    <label>Contact: </label>
+                    <label>Contact </label>
                     <span style={{ marginLeft: "10px" }}>
                       {donation?.contact}
                     </span>
                   </div>
-                </div>
+                </div> */}
+                <Row className="g-2">
+                  <Col
+                    md
+                    className="mb-3"
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "start",
+                    }}>
+                    <label>Donor Name </label>
+                    <label>Category</label>
+                    <label>Descripion </label>
+                    <label>Address </label>
+                    <label>Email </label>
+                    <label>Contact </label>
+                  </Col>
+                  <Col
+                    md
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}>
+                    <span style={{ marginLeft: "10px" }}>
+                      {donation?.donor_name}
+                    </span>
+                    <span style={{ marginLeft: "10px" }}>
+                      {donation?.item_type}
+                    </span>
+                    <span style={{ marginLeft: "10px" }}>
+                      {donation?.description}
+                    </span>
+                    <span style={{ marginLeft: "10px" }}>
+                      {donation?.address}
+                    </span>
+                    <span style={{ marginLeft: "10px" }}>
+                      {donation?.email}
+                    </span>
+                    <span style={{ marginLeft: "10px" }}>
+                      {donation?.contact}
+                    </span>
+                  </Col>
+                </Row>
               </div>
-              <div className="sendMail">
+
+              {/* <div className="sendMail">
                 <h2 style={{ marginTop: "10px", marginBottom: "10px" }}>
                   Send Mail
                 </h2>
@@ -189,20 +233,13 @@ const Detail = () => {
                     marginBottom: "10px",
                   }}></textarea>
                 <div className="btn btn-warning">Send</div>
-              </div>
+              </div> */}
             </div>
-            <div className="col-lg-3 col-md-12">
-              <div
-                className="d-flex flex-row justify-content-center"
-                style={{ padding: "10px" }}>
-                <img
-                  src={imag}
-                  alt=""
-                  className="img-fluid my-2"
-                  style={{ height: "100%" }}
-                />
-              </div>
-            </div>
+            <Row>
+              <Col md sm={12}>
+                <img src={imag} alt="" className="img-fluid my-4" />
+              </Col>
+            </Row>
           </div>
         </Container>
       </Container>

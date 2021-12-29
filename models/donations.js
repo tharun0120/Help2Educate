@@ -53,6 +53,15 @@ const donationsSchema = mongoose.Schema(
   }
 );
 
+// donationsSchema.methods.toJSON = function () {
+//   const donation = this;
+//   const donationObject = donation.toObject();
+
+//   delete donationObject.images;
+
+//   return donationObject;
+// };
+
 const donations = mongoose.model("donations", donationsSchema);
 
 module.exports = donations;

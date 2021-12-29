@@ -6,7 +6,7 @@ import { clearState, selectUser, signOut } from "../features/users/userSlice";
 import { toast } from "react-toastify";
 
 function NavBar(props) {
-  const { isLoggedIn, isSuccess } = useSelector(selectUser);
+  const { isLoggedIn, isSuccess, user } = useSelector(selectUser);
   const dispatch = useDispatch();
 
   useEffect(() => {}, [isLoggedIn, isSuccess]); //eslint-disable-line
@@ -19,7 +19,9 @@ function NavBar(props) {
     }
   };
   return (
-    <Navbar className="d-flex justify-content-md-between navbar-dark" expand="sm" >
+    <Navbar
+      className="d-flex justify-content-md-between navbar-dark"
+      expand="sm">
       <div>
         <Navbar.Brand href="" style={{ color: "white", fontWeight: "700" }}>
           Help2Educate
@@ -107,48 +109,47 @@ function NavBar(props) {
                   }}>
                   Account
                 </Button>
-                <div class="modal fade"
+                <div
+                  class="modal fade"
                   id="account"
-                  data-bs-backdrop="static"
-                  data-bs-keyboard="false"
+                  // data-bs-backdrop="static"
+                  // data-bs-keyboard="false"
                   tabindex="-1"
                   aria-labelledby="staticBackdropLabel"
                   aria-hidden="true">
                   <div className="modal-dialog">
-                    <div className="modal-content"
-                      style={{ backgroundColor: '#153A2D', color: 'white' }}>
+                    <div
+                      className="modal-content"
+                      style={{ backgroundColor: "#153A2D", color: "white" }}>
                       <div className="modal-header">
-                        <h5 className="modal-title" id="staticBackdropLabel">Hello, {"Jacob"}!</h5>
-                        <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 className="modal-title" id="staticBackdropLabel">
+                          Hello, {user?.displayName}!
+                        </h5>
+                        <button
+                          type="button"
+                          className="btn-close btn-close-white"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        <table width="100%" style={{ fontSize: 'large'}}>
+                        <table width="100%" style={{ fontSize: "large" }}>
                           <tr>
                             <th width="50%"></th>
                             <th width="50%"></th>
                           </tr>
                           <tr>
-                            <td className="fname">
-                              First Name
-                            </td>
-                            <td className="fname">
-                              {"Jacob"}
-                            </td>
+                            <td className="fname">First Name</td>
+                            <td className="fname">{user?.firstName}</td>
                           </tr>
                           <tr>
-                            <td className="lname">
-                              Last Name
-                            </td>
-                            <td className="lname">
-                              {"Marley"}
-                            </td>
+                            <td className="lname">Last Name</td>
+                            <td className="lname">{user?.lastName}</td>
                           </tr>
                           <tr>
+                            <td className="addr">Address</td>
                             <td className="addr">
-                              Address
-                            </td>
-                            <td className="addr">
-                              <Button className="btn btn-warning"
+                              <Button
+                                className="btn btn-warning"
                                 style={{
                                   backgroundColor: "#FFC107",
                                   borderColor: "#FFC107",
@@ -161,19 +162,14 @@ function NavBar(props) {
                             </td>
                           </tr>
                           <tr>
-                            <td className="mail">
-                              E-Mail
-                            </td>
-                            <td className="mail">
-                              {"jacob123@nomail.com"}
-                            </td>
+                            <td className="mail">E-Mail</td>
+                            <td className="mail">{user?.email}</td>
                           </tr>
                           <tr>
+                            <td className="phone">Phone</td>
                             <td className="phone">
-                              Phone
-                            </td>
-                            <td className="phone">
-                              <Button className="btn btn-warning"
+                              <Button
+                                className="btn btn-warning"
                                 style={{
                                   backgroundColor: "#FFC107",
                                   borderColor: "#FFC107",
@@ -187,7 +183,9 @@ function NavBar(props) {
                           </tr>
                           <tr>
                             <td>
-                              <button type="button" class="btn btn-warning"
+                              <button
+                                type="button"
+                                class="btn btn-warning"
                                 style={{
                                   backgroundColor: "#FFC107",
                                   borderColor: "#FFC107",
@@ -202,7 +200,8 @@ function NavBar(props) {
                         </table>
                       </div>
                       <div class="modal-footer">
-                        <button type="button"
+                        <button
+                          type="button"
                           class="btn btn-warning"
                           data-bs-dismiss="modal"
                           style={{
@@ -214,9 +213,10 @@ function NavBar(props) {
                           }}>
                           Close
                         </button>
-                        <button type="button"
+                        <button
+                          type="button"
                           class="btn btn-warning"
-                          onClick="onSignOut"
+                          onClick={onSignOut}
                           style={{
                             backgroundColor: "#FFC107",
                             borderColor: "#FFC107",
@@ -232,10 +232,11 @@ function NavBar(props) {
                 </div>
               </div>
             )}
-          </Nav.Link>{ }
+          </Nav.Link>
+          {}
         </Nav>
       </Navbar.Collapse>
-    </Navbar >
+    </Navbar>
   );
 }
 

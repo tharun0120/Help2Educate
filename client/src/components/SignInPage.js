@@ -27,7 +27,7 @@ function SignInPage() {
     if (!user) {
       dispatch(isLoggedIn());
     }
-  }, []); //eslint-disable-line
+  }, [user]); //eslint-disable-line
 
   useEffect(() => {
     if (isSuccess) {

@@ -10,13 +10,13 @@ import { selectUser } from "../features/users/userSlice";
 import Footer from "./Footer";
 
 function LandingPage() {
-  const { user, isSuccess } = useSelector(selectUser);
+  const { isLoggedIn } = useSelector(selectUser);
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isLoggedIn) {
       toast.success("Logged in Successfully!!!");
     }
-  }, [isSuccess, user]);
+  }, [isLoggedIn]);
 
   return (
     <section>
