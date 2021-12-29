@@ -9,7 +9,7 @@ function NavBar(props) {
   const { isLoggedIn, isSuccess } = useSelector(selectUser);
   const dispatch = useDispatch();
 
-  useEffect(() => {}, [isLoggedIn, isSuccess]); //eslint-disable-line
+  useEffect(() => { }, [isLoggedIn, isSuccess]); //eslint-disable-line
 
   const onSignOut = () => {
     dispatch(signOut());
@@ -107,22 +107,20 @@ function NavBar(props) {
                   }}>
                   Account
                 </Button>
-                <div class="modal fade"
+                <div
+                  className="modal fade"
                   id="account"
-                  data-bs-backdrop="static"
-                  data-bs-keyboard="false"
                   tabindex="-1"
-                  aria-labelledby="staticBackdropLabel"
+                  role="dialog"
                   aria-hidden="true">
-                  <div className="modal-dialog">
+                  <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content"
                       style={{ backgroundColor: '#153A2D', color: 'white' }}>
                       <div className="modal-header">
-                        <h5 className="modal-title" id="staticBackdropLabel">Hello, {"Jacob"}!</h5>
-                        <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 className="modal-title">Hello, {"Jacob"}!</h5>
                       </div>
-                      <div class="modal-body">
-                        <table width="100%" style={{ fontSize: 'large'}}>
+                      <div className="modal-body">
+                        <table width="100%" style={{ fontSize: 'large' }}>
                           <tr>
                             <th width="50%"></th>
                             <th width="50%"></th>
@@ -185,7 +183,7 @@ function NavBar(props) {
                               </Button>
                             </td>
                           </tr>
-                          <tr>
+                          {/* <tr>
                             <td>
                               <button type="button" class="btn btn-warning"
                                 style={{
@@ -198,11 +196,11 @@ function NavBar(props) {
                                 Register as Charity
                               </button>
                             </td>
-                          </tr>
+                          </tr> */}
                         </table>
                       </div>
-                      <div class="modal-footer">
-                        <button type="button"
+                      <div className="modal-footer">
+                      <Button type="button"
                           class="btn btn-warning"
                           data-bs-dismiss="modal"
                           style={{
@@ -213,8 +211,8 @@ function NavBar(props) {
                             lineHeight: "16px",
                           }}>
                           Close
-                        </button>
-                        <button type="button"
+                        </Button>
+                        <Button type="button"
                           class="btn btn-warning"
                           onClick="onSignOut"
                           style={{
@@ -225,7 +223,7 @@ function NavBar(props) {
                             lineHeight: "16px",
                           }}>
                           Logout
-                        </button>
+                        </Button>
                       </div>
                     </div>
                   </div>
