@@ -167,7 +167,6 @@ function DRPSection2() {
                 name="category"
                 id="category"
                 onChange={(e) => setItemType(e.target.value)}>
-                <option></option>
                 <option value="Stationary">Stationary</option>
                 <option value="Other">Other</option>
                 <option value="Supplies">Supplies</option>

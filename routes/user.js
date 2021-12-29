@@ -30,7 +30,10 @@ router.patch("/me", ensureAuthLocal, async (req, res) => {
     "lastName",
     "email",
     "password",
+    "address",
+    "contact",
   ];
+
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );

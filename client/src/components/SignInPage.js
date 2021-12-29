@@ -26,6 +26,9 @@ function SignInPage() {
   useEffect(() => {
     if (!user) {
       dispatch(isLoggedIn());
+      if (isSuccess) {
+        toast.success("Logged in Successfully");
+      }
     }
   }, [user]); //eslint-disable-line
 
@@ -54,6 +57,9 @@ function SignInPage() {
       password,
     };
     dispatch(signIn(user));
+    if (isSuccess) {
+      toast.success("Logged in Successfully");
+    }
   };
 
   const signInGoogle = () => {

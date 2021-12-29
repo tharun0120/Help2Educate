@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import imag from "../Assets/post.png";
+import { Fade } from "react-reveal";
 
 function LPSection3() {
   return (
@@ -45,7 +46,9 @@ function LPSection3() {
               </div>
             </Col>
             <Col md={5} sm={12}>
-              <img src={imag} alt="" className="img-fluid my-4" />
+              <Fade right>
+                <img src={imag} alt="" className="img-fluid my-4" />
+              </Fade>
             </Col>
           </Row>
         </Container>

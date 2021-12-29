@@ -25,7 +25,7 @@ function DRPSection1() {
                 <br />
                 Thank you.
                 <br />
-                Please continue by filling some details about your donations.
+                Please continue by filling some details about your Donation.
               </center>
             </h3>
           </div>

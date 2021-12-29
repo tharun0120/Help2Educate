@@ -1,23 +1,106 @@
-import React, { useEffect } from "react";
-import { Nav, Navbar, Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import {
+  Nav,
+  Navbar,
+  Button,
+  Modal,
+  Row,
+  Col,
+  InputGroup,
+  FormControl,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clearState, selectUser, signOut } from "../features/users/userSlice";
+import {
+  clearState,
+  selectUser,
+  signOut,
+  isLoggedIn,
+} from "../features/users/userSlice";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 function NavBar(props) {
-  const { isLoggedIn, isSuccess, user } = useSelector(selectUser);
+  const { isSuccess, user } = useSelector(selectUser);
+  const [thisUser, setThisUser] = useState(user);
   const dispatch = useDispatch();
+  const [address, setAddress] = useState("");
+  const [contact, setContact] = useState("");
 
-  useEffect(() => { }, [isLoggedIn, isSuccess]); //eslint-disable-line
+  useEffect(() => {}, [thisUser]); //eslint-disable-line
+  useEffect(() => {
+    dispatch(isLoggedIn());
+  }, []); //eslint-disable-line
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const onDeleteAccount = () => {
+    axios
+      .delete("/api/user/me", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((data) => {
+        toast.success("Account deleted successfully");
+        dispatch(clearState);
+        setShow(false);
+      });
+  };
+
+  const onAddAddress = () => {
+    if (address)
+      axios
+        .patch(
+          "/api/user/me",
+          { address: address },
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        )
+        .then((data) => {
+          toast.success("Address added successfully");
+          setAddress("");
+          setThisUser(user);
+          setShow(false);
+        });
+    else toast.warn("Please enter the address");
+  };
+  const onAddContact = () => {
+    if (contact)
+      axios
+        .patch(
+          "/api/user/me",
+          { contact: contact },
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        )
+        .then((data) => {
+          toast.success("Contact added successfully");
+          setContact("");
+          setThisUser(user);
+          setShow(false);
+        });
+    else toast.warn("Please enter the contact");
+  };
 
   const onSignOut = () => {
     dispatch(signOut());
-    if (isLoggedIn) {
+    if (isSuccess) {
       toast.success("Logged out Successfully!!!");
+      handleClose();
       dispatch(clearState());
     }
   };
+
   return (
     <Navbar
       className="d-flex justify-content-md-between navbar-dark"
@@ -30,7 +113,9 @@ function NavBar(props) {
 
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
-      <Navbar.Collapse className="justify-content-end">
+      <Navbar.Collapse
+        className="justify-content-end"
+        style={{ display: "flex", alignItems: "center" }}>
         <Nav className="ml-auto">
           <Nav.Link
             href=""
@@ -44,7 +129,7 @@ function NavBar(props) {
                 color: props.name === "HOM" ? "orange" : "white",
               }}
               to="/">
-              Home
+              HOME
             </Link>
           </Nav.Link>{" "}
           <Nav.Link
@@ -59,7 +144,7 @@ function NavBar(props) {
                 color: props.name === "DRP" ? "orange" : "white",
               }}
               to="/donate">
-              Donate
+              DONATE
             </Link>
           </Nav.Link>{" "}
           <Nav.Link
@@ -74,11 +159,11 @@ function NavBar(props) {
                 color: props.name === "FRP" ? "orange" : "white",
               }}
               to="/receive">
-              Recieve
+              RECEIVE
             </Link>
           </Nav.Link>{" "}
           <Nav.Link href="">
-            {!isLoggedIn ? (
+            {!user ? (
               <Link
                 to="/signin"
                 style={{ color: "#153A2D", textDecoration: "none" }}>
@@ -98,8 +183,7 @@ function NavBar(props) {
               <div>
                 <Button
                   className="btn btn-primary"
-                  data-bs-toggle="modal"
-                  data-bs-target="#account"
+                  onClick={handleShow}
                   style={{
                     backgroundColor: "#FFC107",
                     borderColor: "#FFC107",
@@ -109,46 +193,119 @@ function NavBar(props) {
                   }}>
                   Account
                 </Button>
-                <div
-<<<<<<< HEAD
+                <Modal
+                  show={show}
+                  backdrop="static"
+                  size="lg"
+                  keyboard={false}
+                  centered
+                  onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Hello, {user?.displayName}!</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <Row
+                      g-2
+                      style={{
+                        textAlign: "start",
+                        padding: "25px",
+                        fontSize: "1.5rem",
+                      }}>
+                      <Col
+                        md
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}>
+                        <label>First Name</label>
+                        <label>Last Name</label>
+                        <label>Email</label>
+                        <label>Contact</label>
+                        <label>Address</label>
+                      </Col>
+                      <Col
+                        md
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}>
+                        <span>{user?.firstName}</span>
+                        <span>{user?.lastName}</span>
+                        <span>{user?.email}</span>
+                        {user?.contact ? (
+                          <span>{user?.contact}</span>
+                        ) : (
+                          <InputGroup>
+                            <FormControl
+                              placeholder="Phone"
+                              aria-label="Recipient's username"
+                              aria-describedby=""
+                              value={contact}
+                              onChange={(e) => setContact(e.target.value)}
+                            />
+                            <Button variant="secondary" onClick={onAddContact}>
+                              ADD
+                            </Button>
+                          </InputGroup>
+                        )}
+                        {user?.address ? (
+                          <span>{user?.address}</span>
+                        ) : (
+                          <InputGroup>
+                            <FormControl
+                              placeholder="Address"
+                              aria-label="Recipient's username"
+                              aria-describedby=""
+                              value={address}
+                              onChange={(e) => setAddress(e.target.value)}
+                            />
+                            <Button variant="secondary" onClick={onAddAddress}>
+                              ADD
+                            </Button>
+                          </InputGroup>
+                        )}
+                      </Col>
+                    </Row>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="danger" onClick={onDeleteAccount}>
+                      Delete Account
+                    </Button>
+                    <Button variant="primary" onClick={onSignOut}>
+                      Logout
+                    </Button>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Close
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+                {/* <div
                   class="modal fade"
                   id="account"
-                  // data-bs-backdrop="static"
-                  // data-bs-keyboard="false"
-=======
-                  className="modal fade"
-                  id="account"
->>>>>>> 1d3b511d91fd5ec8ba94c7d9bf886601ad85e300
+                  data-bs-backdrop="static"
+                  data-bs-keyboard="false"
                   tabindex="-1"
                   role="dialog"
                   aria-hidden="true">
-<<<<<<< HEAD
-                  <div className="modal-dialog">
+                  <div
+                    className="modal-dialog modal-dialog-centered"
+                    role="document">
                     <div
                       className="modal-content"
                       style={{ backgroundColor: "#153A2D", color: "white" }}>
                       <div className="modal-header">
-                        <h5 className="modal-title" id="staticBackdropLabel">
+                        <h5 className="modal-title">
                           Hello, {user?.displayName}!
                         </h5>
-                        <button
-                          type="button"
-                          className="btn-close btn-close-white"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <table width="100%" style={{ fontSize: "large" }}>
-=======
-                  <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content"
-                      style={{ backgroundColor: '#153A2D', color: 'white' }}>
-                      <div className="modal-header">
-                        <h5 className="modal-title">Hello, {"Jacob"}!</h5>
                       </div>
                       <div className="modal-body">
-                        <table width="100%" style={{ fontSize: 'large' }}>
->>>>>>> 1d3b511d91fd5ec8ba94c7d9bf886601ad85e300
+                        <table width="100%" style={{ fontSize: "large" }}>
                           <tr>
                             <th width="50%"></th>
                             <th width="50%"></th>
@@ -166,6 +323,7 @@ function NavBar(props) {
                             <td className="addr">
                               <Button
                                 className="btn btn-warning"
+                                onClick={onAddAddress}
                                 style={{
                                   backgroundColor: "#FFC107",
                                   borderColor: "#FFC107",
@@ -186,6 +344,7 @@ function NavBar(props) {
                             <td className="phone">
                               <Button
                                 className="btn btn-warning"
+                                onClick={onAddPhone}
                                 style={{
                                   backgroundColor: "#FFC107",
                                   borderColor: "#FFC107",
@@ -212,17 +371,12 @@ function NavBar(props) {
                                 Register as Charity
                               </button>
                             </td>
-                          </tr> */}
+                          </tr> 
                         </table>
                       </div>
-<<<<<<< HEAD
-                      <div class="modal-footer">
-                        <button
-                          type="button"
-=======
                       <div className="modal-footer">
-                      <Button type="button"
->>>>>>> 1d3b511d91fd5ec8ba94c7d9bf886601ad85e300
+                        <Button
+                          type="button"
                           class="btn btn-warning"
                           data-bs-dismiss="modal"
                           style={{
@@ -233,14 +387,9 @@ function NavBar(props) {
                             lineHeight: "16px",
                           }}>
                           Close
-<<<<<<< HEAD
-                        </button>
-                        <button
-                          type="button"
-=======
                         </Button>
-                        <Button type="button"
->>>>>>> 1d3b511d91fd5ec8ba94c7d9bf886601ad85e300
+                        <Button
+                          type="button"
                           class="btn btn-warning"
                           onClick={onSignOut}
                           style={{
@@ -255,7 +404,7 @@ function NavBar(props) {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             )}
           </Nav.Link>

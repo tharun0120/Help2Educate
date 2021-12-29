@@ -2,6 +2,7 @@ import React from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import image from "../Assets/friends.png";
 import NavBar from "../NavBar";
+import { Fade } from "react-reveal";
 
 function LPSection1() {
   return (
@@ -35,7 +36,9 @@ function LPSection1() {
               </div>
             </Col>
             <Col md={5} sm={12}>
-              <img src={image} alt="" className="img-fluid my-4" />
+              <Fade right>
+                <img src={image} alt="" className="img-fluid my-4" />
+              </Fade>
             </Col>
           </Row>
         </Container>

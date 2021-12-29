@@ -18,7 +18,7 @@ const FRPSection1 = () => {
           className="d-flex flex-row justify-content-center pb-5"
           style={{ color: "white", fontWeight: "600" }}>
           <h3>
-            <center>Find donated resources here.</center>
+            <center>FIND RESOURSES TO BE DONATED HERE</center>
           </h3>
         </div>
       </Container>

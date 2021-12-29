@@ -9,6 +9,7 @@ import {
   clearDonationState,
   updateDonation,
 } from "../../features/donations/donationSlice";
+import { Fade } from "react-reveal";
 
 function DRPSection3() {
   const dispatch = useDispatch();
@@ -16,12 +17,15 @@ function DRPSection3() {
 
   useEffect(() => {
     dispatch(getUserDonations());
+    if (donations) {
+      toast.success("User Donations Fetched!!!");
+    }
   }, []); //eslint-disable-line
 
   useEffect(() => {
-    if (isSuccess) {
-      toast.success("User Donations Fetched!!!");
-    }
+    // if (donations) {
+    //   toast.success("User Donations Fetched!!!");
+    // }
     if (isError) {
       toast.error(error);
       dispatch(clearDonationState());
@@ -47,31 +51,33 @@ function DRPSection3() {
           height: "100%",
           paddingBottom: "40px",
         }}>
-        <Container fluid="xxl">
-          <div
-            className="px-md-5 py-5 mb-3 mx-auto"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}>
-            <h1 style={{ color: "white" }} className="mb-3">
-              History of Donations
-            </h1>
-          </div>
-          {donations &&
-            donations.map((i) => {
-              return (
-                <HistoryDonationCard
-                  name={i.item_name}
-                  date={i.item_type}
-                  status={i.isDonated}
-                  key={i._id}
-                  changeDonate={() => changeDonate(i._id)}
-                />
-              );
-            })}
-        </Container>
+        <Fade up>
+          <Container fluid="xxl">
+            <div
+              className="px-md-5 py-5 mb-3 mx-auto"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}>
+              <h1 style={{ color: "white" }} className="mb-3">
+                History of Donations
+              </h1>
+            </div>
+            {donations &&
+              donations.map((i) => {
+                return (
+                  <HistoryDonationCard
+                    name={i.item_name}
+                    date={i.item_type}
+                    status={i.isDonated}
+                    key={i._id}
+                    changeDonate={() => changeDonate(i._id)}
+                  />
+                );
+              })}
+          </Container>
+        </Fade>
       </Container>
     </div>
   );

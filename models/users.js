@@ -52,6 +52,12 @@ const userSchema = new mongoose.Schema(
     googleID: {
       type: String,
     },
+    address: {
+      type: String,
+    },
+    contact: {
+      type: String,
+    },
   },
   {
     timestamps: true,

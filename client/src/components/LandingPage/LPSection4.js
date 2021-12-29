@@ -4,6 +4,7 @@ import imag from "../Assets/love.png";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Fade } from "react-reveal";
 
 function LPSection4() {
   const [show, setShow] = useState(false);
@@ -11,6 +12,11 @@ function LPSection4() {
     <div>
       <Container fluid="xxl ">
         <Row className="my-4">
+          <Col md={5} sm={12}>
+            <Fade left>
+              <img src={imag} alt="" className="img-fluid my-4" />
+            </Fade>
+          </Col>
           <Col
             md={7}
             sm={12}
@@ -60,9 +66,6 @@ function LPSection4() {
                 </div>
               </Alert>
             </div>
-          </Col>
-          <Col md={5} sm={12}>
-            <img src={imag} alt="" className="img-fluid my-4" />
           </Col>
         </Row>
       </Container>

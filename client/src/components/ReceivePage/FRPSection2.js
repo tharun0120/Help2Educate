@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Card, Row, Col, Container } from "react-bootstrap";
-import image from "../Assets/pencils.png";
+import img from "../Assets/pencils.png";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getDonations,
@@ -60,11 +60,13 @@ const FRPSection2 = ({ isLoggedIn }) => {
                   <Col key={item._id}>
                     {arrayBufferToBase64(item.images[0])}
                     <Card className="mt-3">
-                      {image && (
+                      {image ? (
                         <Card.Img
                           variant="top"
                           src={`data:image/png;base64,${image}`}
                         />
+                      ) : (
+                        <Card.Img variant="top" src={img} />
                       )}
 
                       <Card.Body>
