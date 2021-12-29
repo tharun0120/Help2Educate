@@ -62,18 +62,37 @@ const Detail = () => {
                 marginTop: "10px",
                 marginBottom: "10px",
                 padding: "10px",
+                fontWeight: "600",
+                fontSize: "large",
               }}>
               <div className="h2 itemName">{donation?.item_name}</div>
               <br />
-              <div className="donorName">
-                Donor Name : &nbsp; {donation?.donor_name}
-              </div>
-              <div className="cat">
-                Category : &nbsp; {donation?.item_type}
-              </div>
-              <div className="addr">Address : &nbsp; {donation?.address}</div>
-              <div className="email">Email : &nbsp; {donation?.email}</div>
-              <div className="phone">Phone : &nbsp; {donation?.contact}</div>
+              <table style={{width: '100%'}}>
+                <tr>
+                  <th style={{width: '25%'}}></th>
+                  <th></th>
+                </tr>
+                <tr>
+                  <td className="donorName">Donor Name</td>
+                  <td className="donorName">{donation?.donor_name}</td>
+                </tr>
+                <tr>
+                  <td className="cat">Category</td>
+                  <td className="cat">{donation?.item_type}</td>
+                </tr>
+                <tr>
+                  <td className="addr">Address</td>
+                  <td className="addr">{donation?.address}</td>
+                </tr>
+                <tr>
+                  <td className="email">Email</td>
+                  <td className="email">{donation?.email}</td>
+                </tr>
+                <tr>
+                  <td className="phone">Phone</td>
+                  <td className="phone">{donation?.contact}</td>
+                </tr>
+              </table>
             </div>
             {/* <div className="sendMail">
               <div
