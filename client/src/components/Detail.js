@@ -50,42 +50,39 @@ const Detail = () => {
     <Container
       fluid="full"
       style={{ backgroundColor: "#153A2D", minWidth: "100%" }}>
-      <Container fluid="xxl">
-        <NavBar />
-
-        <Container className="content" style={{ padding: "1vmin" }}>
-          <h1 style={{ color: "white", fontWeight: "600" }}>Details</h1>
-          <div
-            className="d-flex flex-row justify-content-center pb-5"
-            style={{ color: "white", fontWeight: "600", display: "block" }}>
-            <div className="col-lg-9 col-md-12">
-              <Carousel variant="dark">
-                {donation ? (
-                  donation?.images.map((item) => {
-                    return (
-                      <Carousel.Item>
-                        <img
-                          className="d-block w-100"
-                          src={`data:image/png;base64,${arrayBufferToBase64(
-                            item
-                          )}`}
-                          alt="First slide"
-                          style={{ maxHeight: "400px", objectFit: "cover" }}
-                        />
-                      </Carousel.Item>
-                    );
-                  })
-                ) : (
-                  <Carousel.Item>
-                    <img
-                      className="d-block w-100"
-                      src={image}
-                      alt="First slide"
-                      style={{ maxHeight: "400px", objectFit: "contain" }}
-                    />
-                  </Carousel.Item>
-                )}
-                {/* <Carousel.Item>
+      <Container className="content" style={{ padding: "1vmin" }}>
+        <h1 style={{ color: "white", fontWeight: "600" }}>Details</h1>
+        <div
+          className="d-flex flex-row justify-content-center pb-5"
+          style={{ color: "white", fontWeight: "600", display: "block" }}>
+          <div className="col-lg-9 col-md-12">
+            <Carousel variant="dark">
+              {donation ? (
+                donation?.images.map((item) => {
+                  return (
+                    <Carousel.Item>
+                      <img
+                        className="d-block w-100"
+                        src={`data:image/png;base64,${arrayBufferToBase64(
+                          item
+                        )}`}
+                        alt="First slide"
+                        style={{ maxHeight: "400px", objectFit: "cover" }}
+                      />
+                    </Carousel.Item>
+                  );
+                })
+              ) : (
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={image}
+                    alt="First slide"
+                    style={{ maxHeight: "400px", objectFit: "contain" }}
+                  />
+                </Carousel.Item>
+              )}
+              {/* <Carousel.Item>
                   <img
                     className="d-block "
                     src={image}
@@ -101,26 +98,19 @@ const Detail = () => {
                     style={{ maxHeight: "300px" }}
                   />
                 </Carousel.Item> */}
-              </Carousel>
-              <div
-                className="info"
-                style={{
-                  width: "100%",
-                  backgroundColor: "white",
-                  color: "black",
-                  borderRadius: "10px",
-                  marginTop: "10px",
-                  marginBottom: "10px",
-                  padding: "10px",
-                  fontSize: "1.5rem",
-                }}>
-                <h2
-                  className="itemName"
-                  style={{ textAlign: "center", fontSize: "2rem" }}>
-                  {donation?.item_name}
-                </h2>
-                <br />
-                {/* <div
+            </Carousel>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}>
+              <h2
+                className="itemName"
+                style={{ textAlign: "center", fontSize: "2rem" }}>
+                {donation?.item_name}
+              </h2>
+              <br />
+              {/* <div
                   style={{
                     display: "flex",
                     gap: "10px",
@@ -163,55 +153,53 @@ const Detail = () => {
                     </span>
                   </div>
                 </div> */}
-                <Row className="g-2">
-                  <Col
-                    md
-                    className="mb-3"
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      textAlign: "start",
-                    }}>
-                    <label>Donor Name </label>
-                    <label>Category</label>
-                    <label>Descripion </label>
-                    <label>Address </label>
-                    <label>Email </label>
-                    <label>Contact </label>
-                  </Col>
-                  <Col
-                    md
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}>
-                    <span style={{ marginLeft: "10px" }}>
-                      {donation?.donor_name}
-                    </span>
-                    <span style={{ marginLeft: "10px" }}>
-                      {donation?.item_type}
-                    </span>
-                    <span style={{ marginLeft: "10px" }}>
-                      {donation?.description}
-                    </span>
-                    <span style={{ marginLeft: "10px" }}>
-                      {donation?.address}
-                    </span>
-                    <span style={{ marginLeft: "10px" }}>
-                      {donation?.email}
-                    </span>
-                    <span style={{ marginLeft: "10px" }}>
-                      {donation?.contact}
-                    </span>
-                  </Col>
-                </Row>
-              </div>
+              <Row className="g-2">
+                <Col
+                  md
+                  className="mb-3"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "start",
+                  }}>
+                  <label>Donor Name </label>
+                  <label>Category</label>
+                  <label>Descripion </label>
+                  <label>Address </label>
+                  <label>Email </label>
+                  <label>Contact </label>
+                </Col>
+                <Col
+                  md
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}>
+                  <span style={{ marginLeft: "10px" }}>
+                    {donation?.donor_name}
+                  </span>
+                  <span style={{ marginLeft: "10px" }}>
+                    {donation?.item_type}
+                  </span>
+                  <span style={{ marginLeft: "10px" }}>
+                    {donation?.description}
+                  </span>
+                  <span style={{ marginLeft: "10px" }}>
+                    {donation?.address}
+                  </span>
+                  <span style={{ marginLeft: "10px" }}>{donation?.email}</span>
+                  <span style={{ marginLeft: "10px" }}>
+                    {donation?.contact}
+                  </span>
+                </Col>
+              </Row>
+            </div>
 
-              {/* <div className="sendMail">
+            {/* <div className="sendMail">
                 <h2 style={{ marginTop: "10px", marginBottom: "10px" }}>
                   Send Mail
                 </h2>
@@ -234,14 +222,13 @@ const Detail = () => {
                   }}></textarea>
                 <div className="btn btn-warning">Send</div>
               </div> */}
-            </div>
-            <Row>
-              <Col md sm={12}>
-                <img src={imag} alt="" className="img-fluid my-4" />
-              </Col>
-            </Row>
           </div>
-        </Container>
+          <Row>
+            <Col md sm={12}>
+              <img src={imag} alt="" className="img-fluid my-4" />
+            </Col>
+          </Row>
+        </div>
       </Container>
     </Container>
   );
