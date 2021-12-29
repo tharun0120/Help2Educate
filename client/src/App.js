@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LoginSuccess from "./components/LoginSuccess";
 import Detail from "./components/Detail";
 
+
 function App() {
   return (
     <div className="App">

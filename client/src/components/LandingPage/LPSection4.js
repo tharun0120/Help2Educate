@@ -22,7 +22,7 @@ function LPSection4() {
                 Help us with our mission by donating or by refering a donor or a
                 receiver about our page.
               </h4>
-              <Link to="/DRP">
+              <Link to="/donate">
                 <Button
                   className="btn btn-primary mt-2"
                   style={{
@@ -35,7 +35,7 @@ function LPSection4() {
                   Donate
                 </Button>
               </Link>
-              <CopyToClipboard text="Hello!">
+              <CopyToClipboard text="https://help2educate.herokuapp.com/">
                 <Button
                   className="btn btn-primary mt-2 mx-3"
                   onClick={() => setShow(true)}

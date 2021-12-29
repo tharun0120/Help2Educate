@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Carousel, Container } from "react-bootstrap";
+import { Carousel, Container, Row, Col } from "react-bootstrap";
 import NavBar from "./NavBar";
 import imag from "./Assets/present-5442902_1920.png";
 import image from "./Assets/pencils.png";
@@ -9,8 +9,6 @@ const Detail = () => {
   const { id } = useParams();
   const history = useHistory();
   const [donation, setDonation] = useState();
-  // const [images, setImages] = useState([]);
-
   useEffect(() => {
     const getDonation = async () => {
       const response = await fetch(`/api/donations/${id}`, {
