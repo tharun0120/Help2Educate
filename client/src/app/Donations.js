@@ -1,7 +1,8 @@
+import axios from "axios";
 class DonationClass {
   constructor() {} //eslint-disable-line
 
-  createDonation(donation) {
+  createDonation(donation, files) {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch("api/donations/enlist", {
@@ -13,9 +14,19 @@ class DonationClass {
           },
           body: JSON.stringify(donation),
         });
-        await response.json().then((data) => {
+        await response.json().then(async (data) => {
           if (response.status === 201) {
             resolve(data);
+            axios
+              .post(`/api/donations/upload/images/${data._id}`, files, {
+                headers: {
+                  Authorization: "Bearer " + localStorage.getItem("token"),
+                },
+              })
+              .then((data) => {
+                console.log(data);
+              })
+              .catch((error) => console.log(error));
           } else {
             reject(data);
           }

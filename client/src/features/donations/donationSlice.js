@@ -14,10 +14,10 @@ const donation = new DonationClass();
 
 const createDonation = createAsyncThunk(
   "/api/createDonation",
-  (donations, thunkAPI) => {
+  ({ donations, files }, thunkAPI) => {
     return new Promise(async (resolve, reject) => {
       await donation
-        .createDonation(donations)
+        .createDonation(donations, files)
         .then((donations) => resolve(donations))
         .catch((error) => {
           reject(thunkAPI.rejectWithValue(error));

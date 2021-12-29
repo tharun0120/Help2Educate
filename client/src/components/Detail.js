@@ -37,19 +37,21 @@ const Detail = () => {
           <div
             className="d-flex flex-row justify-content-center pb-5"
             style={{ color: "white", fontWeight: "600", display: "block" }}>
-            <div className="span3" style={{ maxWidth: "60%", minWidth: "60%" }}>
-              <Carousel variant="dark">
+            <div className="col-lg-9 col-md-12">
+              <Carousel
+                variant="dark"
+                style={{ width: "300px", height: "300px" }}>
                 <Carousel.Item>
                   <img
-                    className="d-block w-100"
+                    className="d-block "
                     src={image}
                     alt="First slide"
-                    style={{ maxHeight: "300px" }}
+                    style={{ maxHeight: "300px", objectFit: "contain" }}
                   />
                 </Carousel.Item>
                 <Carousel.Item>
                   <img
-                    className="d-block w-100"
+                    className="d-block"
                     src={image}
                     alt="Second slide"
                     style={{ maxHeight: "300px" }}
@@ -66,25 +68,62 @@ const Detail = () => {
                   marginTop: "10px",
                   marginBottom: "10px",
                   padding: "10px",
+                  fontSize: "1.5rem",
                 }}>
-                <div className="h2 itemName">{donation?.item_name}</div>
+                <h2
+                  className="itemName"
+                  style={{ textAlign: "center", fontSize: "2rem" }}>
+                  {donation?.item_name}
+                </h2>
                 <br />
-                <div className="donorName">
-                  Donor Name : &nbsp; {donation?.donor_name}
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "10px",
+                    flexDirection: "column",
+                  }}>
+                  <div>
+                    <label>Donor Name: </label>
+                    <span style={{ marginLeft: "10px" }}>
+                      {donation?.donor_name}
+                    </span>
+                  </div>
+                  <div>
+                    <label>Category: </label>
+                    <span style={{ marginLeft: "10px" }}>
+                      {donation?.item_type}
+                    </span>
+                  </div>
+                  <div>
+                    <label>Description: </label>
+                    <span style={{ marginLeft: "10px" }}>
+                      {donation?.description}
+                    </span>
+                  </div>
+                  <div>
+                    <label>Address: </label>
+                    <span style={{ marginLeft: "10px" }}>
+                      {donation?.address}
+                    </span>
+                  </div>
+                  <div>
+                    <label>Email: </label>
+                    <span style={{ marginLeft: "10px" }}>
+                      {donation?.email}
+                    </span>
+                  </div>
+                  <div>
+                    <label>Contact: </label>
+                    <span style={{ marginLeft: "10px" }}>
+                      {donation?.contact}
+                    </span>
+                  </div>
                 </div>
-                <div className="cat">
-                  Category : &nbsp; {donation?.item_type}
-                </div>
-                <div className="addr">Address : &nbsp; {donation?.address}</div>
-                <div className="email">Email : &nbsp; {donation?.email}</div>
-                <div className="phone">Phone : &nbsp; {donation?.contact}</div>
               </div>
               <div className="sendMail">
-                <div
-                  className="h2"
-                  style={{ marginTop: "10px", marginBottom: "10px" }}>
+                <h2 style={{ marginTop: "10px", marginBottom: "10px" }}>
                   Send Mail
-                </div>
+                </h2>
                 <input
                   type="email"
                   class="form-control"
@@ -105,13 +144,15 @@ const Detail = () => {
                 <div className="btn btn-warning">Send</div>
               </div>
             </div>
-            <div className="span6">
-              <div className="d-flex flex-row justify-content-center">
+            <div className="col-lg-3 col-md-12">
+              <div
+                className="d-flex flex-row justify-content-center"
+                style={{ padding: "10px" }}>
                 <img
                   src={imag}
                   alt=""
                   className="img-fluid my-2"
-                  style={{ width: "25%", height: "50%" }}
+                  style={{ height: "100%" }}
                 />
               </div>
             </div>

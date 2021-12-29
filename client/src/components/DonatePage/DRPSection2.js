@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Form, Col, Button } from "react-bootstrap";
+import { Container, Form, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,6 +7,7 @@ import {
   selectDonations,
   clearDonationState,
 } from "../../features/donations/donationSlice";
+// import axios from "axios";
 
 function DRPSection2() {
   const dispatch = useDispatch();
@@ -19,8 +20,10 @@ function DRPSection2() {
   const [contact, setContact] = useState("");
   const [address, setAddress] = useState("");
   const [image, setImage] = useState([]);
+  const [imageBuffer, setImageBuffer] = useState([]);
 
   const onAddImage = (e) => {
+    setImageBuffer([...imageBuffer, e.target.files[0]]);
     const imageNow = URL.createObjectURL(e.target.files[0]);
     setImage([...image, imageNow]);
   };
@@ -33,14 +36,14 @@ function DRPSection2() {
     }
   }, [isError, isSuccess, image]); //eslint-disable-line
 
-  const setDonations = (donation) => {
-    dispatch(createDonation(donation));
+  const setDonations = (donations, files) => {
+    dispatch(createDonation({ donations, files }));
     if (isSuccess) {
       toast.success("Donation Enlisted Successfully!!!");
     }
   };
 
-  const onListDonation = (e) => {
+  const onListDonation = async (e) => {
     e.preventDefault();
 
     if (!email) {
@@ -75,16 +78,35 @@ function DRPSection2() {
       return;
     }
 
-    setDonations({
-      donor_name,
-      item_name,
-      description,
-      item_type,
-      email,
-      address,
-      contact,
-      isDonated: false,
-    });
+    const formData = new FormData();
+    for (let i = 0; i < imageBuffer.length; i++) {
+      formData.append("donationImages", imageBuffer[i]);
+    }
+    // console.log(formData.getAll("donationImages"));
+
+    // axios
+    //   .post("/api/user/me/avatar", formData, {
+    //     headers: {
+    //       Authorization: "Bearer " + localStorage.getItem("token"),
+    //     },
+    //   })
+    //   .then((data) => {
+    //     console.log(data);
+    //   });
+
+    setDonations(
+      {
+        donor_name,
+        item_name,
+        description,
+        item_type,
+        email,
+        address,
+        contact,
+        isDonated: false,
+      },
+      formData
+    );
     setDonorName("");
     setItemName("");
     setDescription("");
@@ -92,6 +114,8 @@ function DRPSection2() {
     setItemType("");
     setContact("");
     setEmail("");
+    setImage([]);
+    setImageBuffer([]);
   };
   return (
     <div>
@@ -237,7 +261,7 @@ function DRPSection2() {
                   })}
                 </div>
               )}
-              <input
+              {/* <input
                 type="file"
                 className="btn btn-primary mt-2"
                 onChange={onAddImage}
@@ -246,13 +270,32 @@ function DRPSection2() {
                   borderColor: "#FFC107",
                   color: "#153A2D",
                   fontWeight: "600",
+                  width: "25%",
                   fontSize: "20px",
                 }}
-                placeholder="Add a Display Image"
+              /> */}
+              <input
+                type="file"
+                id="files"
+                onChange={onAddImage}
+                style={{ display: "none" }}
               />
+              <label
+                for="files"
+                className="btn btn-primary mt-2"
+                style={{
+                  backgroundColor: "#FFC107",
+                  borderColor: "#FFC107",
+                  color: "#153A2D",
+                  fontWeight: "600",
+                  width: "25%",
+                  fontSize: "20px",
+                }}>
+                Add Images
+              </label>
             </div>
             <br />
-            <Button
+            <button
               onClick={onListDonation}
               className="btn btn-primary mt-3"
               style={{
@@ -264,7 +307,7 @@ function DRPSection2() {
                 fontSize: "20px",
               }}>
               List Donation
-            </Button>
+            </button>
           </Col>
         </Container>
       </Container>

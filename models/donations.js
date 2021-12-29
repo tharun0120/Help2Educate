@@ -37,7 +37,7 @@ const donationsSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
-    images: [{ type: Buffer }],
+    images: [Buffer],
     isDonated: {
       type: Boolean,
       default: false,

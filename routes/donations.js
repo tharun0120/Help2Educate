@@ -24,12 +24,75 @@ router.post("/enlist", ensureAuthLocal, async (req, res) => {
       ...req.body,
       owner_id: req.user._id,
     });
-    console.log(donation);
 
     await donation.save();
     res.status(201).send(donation);
   } catch (err) {
     res.status(400).send(err);
+  }
+});
+
+router.post(
+  "/upload/images/:id",
+  ensureAuthLocal,
+  upload.array("donationImages"),
+  async (req, res) => {
+    if (req.files)
+      try {
+        let donation = await donations.findOne({
+          _id: req.params.id,
+          owner_id: req.user._id,
+        });
+        // console.log(donation);
+        if (!donation) return res.status(404).send("No such item found");
+
+        const files = req.files;
+        // console.log("files", req.files);
+        // let buf = [];
+        const promise = files.map(async (item) => {
+          const buffer = await sharp(item.buffer)
+            .resize({ width: 300, height: 300 })
+            .png()
+            .toBuffer();
+          // console.log("buffer", buffer);
+          donation["images"].push(buffer); // console.log("Buf", buf);
+        });
+        // console.log("req", req.files);  // working
+        Promise.all(promise)
+          .then(() => {
+            // console.log("donatoins", donation.images.length);
+            donation.save();
+            res.status(200).send({ message: "images uploaded successfully" });
+          })
+          .catch((error) => {
+            res.status(400).send({ error: error });
+          });
+      } catch (error) {
+        console.log(error);
+        res.status(400).send(error.message);
+      }
+  },
+  (error, req, res, next) => {
+    res.status(400).send({ error: error });
+  }
+);
+
+router.get("/:id/images", ensureAuthLocal, async (req, res) => {
+  try {
+    const donation = await donations.findById(req.params.id);
+
+    if (!donation) {
+      throw new Error("No such donation is found");
+    }
+
+    if (!donation.images) {
+      throw new Error("No images donation is found");
+    }
+
+    // res.set("Content-Type", "image/png");
+    res.send({ images: donation.images });
+  } catch (error) {
+    res.status(404).send({ error: error });
   }
 });
 

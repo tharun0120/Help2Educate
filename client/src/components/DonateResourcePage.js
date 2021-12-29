@@ -3,6 +3,8 @@ import DRPSection1 from "./DonatePage/DRPSection1";
 import DRPSection2 from "./DonatePage/DRPSection2";
 import DRPSection3 from "./DonatePage/DRPSection3";
 import Footer from "./Footer";
+import { useSelector } from "react-redux";
+import { selectUser } from "../features/users/userSlice";
 
 function DonateResourcePage() {
   return (

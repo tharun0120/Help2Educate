@@ -82,6 +82,7 @@ router.post(
     res.status(201).send({ message: "Avatar uploaded successfully" });
   },
   (error, req, res, next) => {
+    console.log("this is an error ", error);
     res.status(400).send({ error: error });
   }
 );

@@ -30,7 +30,9 @@ function NavBar(props) {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
         <Navbar.Collapse>
-          <Nav className="me-auto">
+          <Nav
+            className="me-auto"
+            style={{ display: "flex", alignItems: "center" }}>
             <Nav.Link
               href=""
               style={{
@@ -43,7 +45,7 @@ function NavBar(props) {
                   color: props.name === "HOM" ? "orange" : "white",
                 }}
                 to="/">
-                Home
+                HOME
               </Link>
             </Nav.Link>{" "}
             &nbsp;&nbsp;
@@ -59,24 +61,23 @@ function NavBar(props) {
                   color: props.name === "DRP" ? "orange" : "white",
                 }}
                 to="/donate">
-                Donate
+                DONATE
               </Link>
             </Nav.Link>{" "}
             &nbsp;&nbsp;
             <Nav.Link
-              href=""
+              href="/receive"
               style={{
                 color: props.name === "FRP" ? "orange" : "white",
                 fontWeight: "600",
               }}>
-              <Link
+              <span
                 style={{
                   textDecoration: "none",
                   color: props.name === "FRP" ? "orange" : "white",
-                }}
-                to="/receive">
-                Recieve
-              </Link>
+                }}>
+                RECEIVE
+              </span>
             </Nav.Link>{" "}
             &nbsp;&nbsp;
             <Nav.Link href="">
@@ -93,7 +94,7 @@ function NavBar(props) {
                       borderColor: "#FFC107",
                       lineHeight: "16px",
                     }}>
-                    Login
+                    LOGIN
                   </button>
                 </Link>
               ) : (

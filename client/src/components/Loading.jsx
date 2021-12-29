@@ -27,7 +27,7 @@ const Loader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top: 16px solid #0172b8;
+  border-top: 16px solid #153a2d;
 
   animation: spin 1.5s ease-in-out infinite;
   @keyframes spin {
