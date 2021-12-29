@@ -205,7 +205,10 @@ router.get("/:id", ensureAuthLocal, async (req, res) => {
   const _id = req.params.id;
 
   try {
-    const donation = await donations.findOne({ _id, owner_id: req.user._id });
+    const donation = await donations.findOne({
+      _id,
+      // owner_id: req.user._id
+    });
 
     if (!donation) return res.status(404).send("No such item found");
 

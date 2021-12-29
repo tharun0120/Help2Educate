@@ -9,6 +9,8 @@ const Detail = () => {
   const { id } = useParams();
   const history = useHistory();
   const [donation, setDonation] = useState();
+  // const [images, setImages] = useState([]);
+
   useEffect(() => {
     const getDonation = async () => {
       const response = await fetch(`/api/donations/${id}`, {
@@ -24,7 +26,28 @@ const Detail = () => {
       } else history.push("/nope");
     };
     getDonation();
+
+    // if (donation) {
+    //   donation?.images.forEach((img) => {
+    //     tempImagesStore.push(arrayBufferToBase64(img));
+    //   });
+    // }
   }, []); //eslint-disable-line
+
+  const arrayBufferToBase64 = (buffer) => {
+    if (buffer) {
+      var binary = "";
+      var bytes = [].slice.call(new Uint8Array(buffer.data));
+      bytes.forEach((b) => (binary += String.fromCharCode(b)));
+      const temp = window.btoa(binary);
+      // console.log(temp);
+      // image = temp;
+      return temp;
+      // console.log(images);
+      // return temp;
+    }
+  };
+
   return (
     <Container
       fluid="full"
@@ -41,7 +64,33 @@ const Detail = () => {
               <Carousel
                 variant="dark"
                 style={{ width: "300px", height: "300px" }}>
-                <Carousel.Item>
+                {donation ? (
+                  donation?.images.map((item) => {
+                    return (
+                      <Carousel.Item>
+                        {}
+                        <img
+                          className="d-block "
+                          src={`data:image/png;base64,${arrayBufferToBase64(
+                            item
+                          )}`}
+                          alt="First slide"
+                          style={{ maxHeight: "300px", objectFit: "contain" }}
+                        />
+                      </Carousel.Item>
+                    );
+                  })
+                ) : (
+                  <Carousel.Item>
+                    <img
+                      className="d-block "
+                      src={image}
+                      alt="First slide"
+                      style={{ maxHeight: "300px", objectFit: "contain" }}
+                    />
+                  </Carousel.Item>
+                )}
+                {/* <Carousel.Item>
                   <img
                     className="d-block "
                     src={image}
@@ -56,7 +105,7 @@ const Detail = () => {
                     alt="Second slide"
                     style={{ maxHeight: "300px" }}
                   />
-                </Carousel.Item>
+                </Carousel.Item> */}
               </Carousel>
               <div
                 className="info"

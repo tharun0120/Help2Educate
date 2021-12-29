@@ -66,18 +66,19 @@ function NavBar(props) {
             </Nav.Link>{" "}
             &nbsp;&nbsp;
             <Nav.Link
-              href="/receive"
+              href=""
               style={{
                 color: props.name === "FRP" ? "orange" : "white",
                 fontWeight: "600",
               }}>
-              <span
+              <Link
+                to="/receive"
                 style={{
                   textDecoration: "none",
                   color: props.name === "FRP" ? "orange" : "white",
                 }}>
                 RECEIVE
-              </span>
+              </Link>
             </Nav.Link>{" "}
             &nbsp;&nbsp;
             <Nav.Link href="">
