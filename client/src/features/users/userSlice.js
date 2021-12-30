@@ -74,6 +74,32 @@ const isLoggedIn = createAsyncThunk("/api/auth/isLoggedin", (thunkAPI) => {
   });
 });
 
+const updateUser = createAsyncThunk("/api/user/me/update", (data, thunkAPI) => {
+  return new Promise(async (resolve, reject) => {
+    await auth
+      .onUserUpdate(data)
+      .then((user) => {
+        resolve(user);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+});
+
+const deleteUser = createAsyncThunk("/api/user/me/delete", (thunkAPI) => {
+  return new Promise(async (resolve, reject) => {
+    await auth
+      .onUserDelete()
+      .then(() => {
+        resolve();
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+});
+
 const userSlice = createSlice({
   name: "userState",
   initialState,
@@ -98,6 +124,7 @@ const userSlice = createSlice({
       state.isSuccess = true;
       state.isError = false;
       state.isLoggedIn = true;
+      // console.log(payload.user);
       state.user = payload.user;
     },
     [signIn.rejected]: (state, { payload }) => {
@@ -175,17 +202,65 @@ const userSlice = createSlice({
       state.isSuccess = true;
       state.isError = false;
       state.isLoggedIn = true;
-      state.user = payload;
+      state.user = payload.user;
     },
     [isLoggedIn.rejected]: (state) => {
       state.isFetching = false;
       state.isError = false;
       state.isSuccess = false;
     },
+    //delete user
+    [deleteUser.pending]: (state) => {
+      state.isFetching = true;
+      state.isError = false;
+      state.isSuccess = false;
+    },
+    [deleteUser.fulfilled]: (state, { payload }) => {
+      state.isFetching = false;
+      state.isSuccess = true;
+      state.isError = false;
+      state.isLoggedIn = false;
+      state.user = null;
+    },
+    [deleteUser.rejected]: (state, { payload }) => {
+      state.isFetching = false;
+      state.isError = true;
+      state.isSuccess = false;
+      state.error = payload;
+    },
+    //update user
+    [updateUser.pending]: (state) => {
+      state.isFetching = true;
+      state.isError = false;
+      state.isSuccess = false;
+    },
+    [updateUser.fulfilled]: (state, { payload }) => {
+      state.isFetching = false;
+      state.isSuccess = true;
+      state.isError = false;
+      state.isLoggedIn = true;
+      // console.log(payload.user);
+      state.user = payload.data;
+    },
+    [updateUser.rejected]: (state, { payload }) => {
+      state.isFetching = false;
+      state.isError = true;
+      state.isSuccess = false;
+      console.log(payload);
+      state.error = payload;
+    },
   },
 });
 
-export { signIn, signInWithGoogle, signUp, signOut, isLoggedIn };
+export {
+  signIn,
+  signInWithGoogle,
+  signUp,
+  signOut,
+  isLoggedIn,
+  updateUser,
+  deleteUser,
+};
 
 export const { clearState } = userSlice.actions;
 

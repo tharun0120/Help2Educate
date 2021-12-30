@@ -1,7 +1,6 @@
 import React from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import image from "../Assets/friends.png";
-import NavBar from "../NavBar";
 import { Fade } from "react-reveal";
 
 function LPSection1() {
@@ -9,8 +8,7 @@ function LPSection1() {
     <div>
       <Container fluid="full" style={{ backgroundColor: "#153A2D" }}>
         <Container fluid="xxl">
-          <NavBar name="HOM" />
-          <Row className="mt-3">
+          <Row>
             <Col
               md={7}
               sm={12}

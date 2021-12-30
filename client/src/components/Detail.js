@@ -4,11 +4,19 @@ import { Carousel, Container, Row, Col } from "react-bootstrap";
 import NavBar from "./NavBar";
 import imag from "./Assets/present-5442902_1920.png";
 import image from "./Assets/pencils.png";
+import { useSelector } from "react-redux";
+import { selectUser } from "../features/users/userSlice";
 
-const Detail = () => {
+const Detail = ({ currentUser }) => {
   const { id } = useParams();
+  const { user, isSuccess } = useSelector(selectUser);
   const history = useHistory();
   const [donation, setDonation] = useState();
+  useEffect(() => {
+    if (!user) {
+      history.push("/signin");
+    }
+  }, [isSuccess]); //eslint-disable-line
   useEffect(() => {
     const getDonation = async () => {
       const response = await fetch(`/api/donations/${id}`, {
@@ -24,7 +32,6 @@ const Detail = () => {
       } else history.push("/nope");
     };
     getDonation();
-
     // if (donation) {
     //   donation?.images.forEach((img) => {
     //     tempImagesStore.push(arrayBufferToBase64(img));
@@ -51,7 +58,7 @@ const Detail = () => {
       fluid="full"
       style={{ backgroundColor: "#153A2D", minWidth: "100%" }}>
       <Container fluid="xxl">
-        <NavBar />
+        <NavBar currentUser={currentUser} />
 
         <Container className="content" style={{ padding: "1vmin" }}>
           <h1 style={{ color: "white", fontWeight: "600" }}>Details</h1>

@@ -44,7 +44,8 @@ router.post(
           owner_id: req.user._id,
         });
         // console.log(donation);
-        if (!donation) return res.status(404).send("No such item found");
+        if (!donation)
+          return res.status(404).send({ message: "No such item found" });
 
         const files = req.files;
         // console.log("files", req.files);
@@ -168,7 +169,8 @@ router.patch("/:id", ensureAuthLocal, async (req, res) => {
     allowedUpdates.includes(update)
   );
 
-  if (!isValidOperation) return res.status(400).send("Invalid update");
+  if (!isValidOperation)
+    return res.status(400).send({ message: "Invalid update" });
 
   try {
     const donation = await donations.findOne({
@@ -176,7 +178,8 @@ router.patch("/:id", ensureAuthLocal, async (req, res) => {
       owner_id: req.user._id,
     });
 
-    if (!donation) return res.status(404).send("No such item found");
+    if (!donation)
+      return res.status(404).send({ message: "No such item found" });
 
     updates.forEach((update) => (donation[update] = req.body[update]));
     await donation.save();
@@ -193,7 +196,8 @@ router.delete("/:id", ensureAuthLocal, async (req, res) => {
       owner_id: req.user._id,
     });
 
-    if (!donation) return res.status(404).send("No such item found");
+    if (!donation)
+      return res.status(404).send({ message: "No such item found" });
 
     res.status(200).send({ donation, message: "Item deleted successfully" });
   } catch (error) {
@@ -210,7 +214,8 @@ router.get("/:id", ensureAuthLocal, async (req, res) => {
       // owner_id: req.user._id
     });
 
-    if (!donation) return res.status(404).send("No such item found");
+    if (!donation)
+      return res.status(404).send({ message: "No such item found" });
 
     res.status(200).send(donation);
   } catch (error) {

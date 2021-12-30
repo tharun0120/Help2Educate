@@ -14,7 +14,6 @@ function DRPSection2() {
   const dispatch = useDispatch();
   const { isSuccess, isError, error } = useSelector(selectDonations);
   const { user } = useSelector(selectUser);
-  console.log(user);
   const [donor_name, setDonorName] = useState(`${user?.displayName}`);
   const [item_name, setItemName] = useState("");
   const [item_type, setItemType] = useState("");
@@ -41,7 +40,7 @@ function DRPSection2() {
       dispatch(clearDonationState());
       return;
     }
-  }, [isError, isSuccess, image]); //eslint-disable-line
+  }, [isError, image]); //eslint-disable-line
 
   const setDonations = (donations, files) => {
     dispatch(createDonation({ donations, files }));
@@ -114,13 +113,13 @@ function DRPSection2() {
       },
       formData
     );
-    setDonorName("");
+    // setDonorName("");
     setItemName("");
     setDescription("");
-    setAddress("");
+    // setAddress("");
     setItemType("");
-    setContact("");
-    setEmail("");
+    // setContact("");
+    // setEmail("");
     setImage([]);
     setImageBuffer([]);
   };
@@ -167,6 +166,7 @@ function DRPSection2() {
                 name="category"
                 id="category"
                 onChange={(e) => setItemType(e.target.value)}>
+                <option>Choose the Category</option>
                 <option value="Stationary">Stationary</option>
                 <option value="Other">Other</option>
                 <option value="Supplies">Supplies</option>

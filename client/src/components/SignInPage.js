@@ -8,14 +8,13 @@ import {
   signIn,
   selectUser,
   clearState,
-  isLoggedIn,
-  signInWithGoogle,
+  // signInWithGoogle,
 } from "../features/users/userSlice";
 import { toast } from "react-toastify";
 import Loading from "./Loading";
 // import Footer from "./Footer";
 
-function SignInPage() {
+function SignInPage({ currentUser }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const { user, isError, isSuccess, isFetching, error } =
@@ -24,18 +23,13 @@ function SignInPage() {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    if (!user) {
-      dispatch(isLoggedIn());
-      if (isSuccess) {
-        toast.success("Logged in Successfully");
-      }
-    }
-  }, [user]); //eslint-disable-line
-
-  useEffect(() => {
-    if (isSuccess) {
+    if (user) {
+      toast.success("Logged in Successfully");
       history.push("/");
     }
+  }, [isSuccess]); //eslint-disable-line
+
+  useEffect(() => {
     if (isError) {
       if (error) {
         if (error.error) {
@@ -48,7 +42,7 @@ function SignInPage() {
       }
       dispatch(clearState());
     }
-  }, [isSuccess, isError]); //eslint-disable-line
+  }, [isError]); //eslint-disable-line
 
   const setUser = (email, password) => {
     // console.log(email, password);
@@ -59,12 +53,13 @@ function SignInPage() {
     dispatch(signIn(user));
     if (isSuccess) {
       toast.success("Logged in Successfully");
+      history.push("/");
     }
   };
 
-  const signInGoogle = () => {
-    dispatch(signInWithGoogle());
-  };
+  // const signInGoogle = () => {
+  //   dispatch(signInWithGoogle());
+  // };
 
   const onSubmit = (e) => {
     e.preventDefault();

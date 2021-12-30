@@ -1,6 +1,5 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import NavBar from "../NavBar";
 import image from "../Assets/dob.png";
 
 function DRPSection1() {
@@ -8,8 +7,6 @@ function DRPSection1() {
     <div>
       <Container fluid="full" style={{ backgroundColor: "#153A2D" }}>
         <Container fluid="xxl">
-          <NavBar name="DRP" />
-
           <div className="d-flex flex-row justify-content-center">
             <div>
               <img src={image} className="img-fluid my-2" alt="" />

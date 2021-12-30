@@ -44,7 +44,7 @@ router.post("/logout", ensureAuthLocal, async (req, res) => {
       return token.token != req.token;
     });
     await req.user.save();
-    res.send("Logged out successfully");
+    res.send({ message: "Logged out successfully" });
   } catch (error) {
     res.status(500).send();
   }
@@ -55,7 +55,7 @@ router.post("/logoutAll", ensureAuthLocal, async (req, res) => {
   try {
     req.user.tokens = [];
     await req.user.save();
-    res.send("Logged Out of all the devices");
+    res.send({ message: "Logged Out of all the devices" });
   } catch (error) {
     res.status(500).send();
   }

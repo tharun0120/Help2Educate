@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 import { Button, Card, Row, Col, Container } from "react-bootstrap";
 import img from "../Assets/pencils.png";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getDonations,
@@ -10,12 +11,21 @@ import {
 } from "../../features/donations/donationSlice";
 import { Link } from "react-router-dom";
 
-const FRPSection2 = ({ isLoggedIn }) => {
+const FRPSection2 = ({ currentUser }) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { allDonations, isSuccess, isError, error } =
     useSelector(selectDonations);
   const donationKeys = Object.keys(allDonations);
   let image;
+
+  const onKnowMore = (id) => {
+    if (currentUser) history.push(`/donation/${id}`);
+    else {
+      toast.error("Login to Know More");
+      history.push("/signin");
+    }
+  };
 
   useEffect(() => {
     dispatch(getDonations());
@@ -71,10 +81,11 @@ const FRPSection2 = ({ isLoggedIn }) => {
 
                       <Card.Body>
                         <Card.Title>{item.item_name}</Card.Title>
-                        <Link
-                          to={isLoggedIn ? `/donation/${item._id}` : "/signin"}>
-                          <Button variant="warning">Know More</Button>
-                        </Link>
+                        <Button
+                          variant="warning"
+                          onClick={() => onKnowMore(item._id)}>
+                          Know More
+                        </Button>
                       </Card.Body>
                     </Card>
                   </Col>

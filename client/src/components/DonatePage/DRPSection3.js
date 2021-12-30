@@ -10,6 +10,7 @@ import {
   updateDonation,
 } from "../../features/donations/donationSlice";
 import { Fade } from "react-reveal";
+// import { isLoggedIn } from "../../features/users/userSlice";
 
 function DRPSection3() {
   const dispatch = useDispatch();
@@ -17,9 +18,10 @@ function DRPSection3() {
 
   useEffect(() => {
     dispatch(getUserDonations());
-    if (donations) {
-      toast.success("User Donations Fetched!!!");
-    }
+    if (donations.length > 0)
+      if (isSuccess) {
+        toast.success("User Donations Fetched!!!");
+      }
   }, []); //eslint-disable-line
 
   useEffect(() => {

@@ -24,7 +24,7 @@ class DonationClass {
                 },
               })
               .then((data) => {
-                console.log(data);
+                // console.log(data);
               })
               .catch((error) => console.log(error));
           } else {
@@ -64,7 +64,7 @@ class DonationClass {
   getDonations() {
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await fetch("api/donations/", {
+        const response = await fetch("api/donations", {
           method: "GET",
           headers: {
             Accept: "application/json",

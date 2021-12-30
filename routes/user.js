@@ -23,6 +23,7 @@ router.get("/me", ensureAuthLocal, async (req, res) => {
 });
 
 router.patch("/me", ensureAuthLocal, async (req, res) => {
+  console.log(req.body);
   const updates = Object.keys(req.body);
   const allowedUpdates = [
     "displayName",
@@ -33,7 +34,6 @@ router.patch("/me", ensureAuthLocal, async (req, res) => {
     "address",
     "contact",
   ];
-
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );
@@ -45,7 +45,7 @@ router.patch("/me", ensureAuthLocal, async (req, res) => {
     updates.forEach((update) => (req.user[update] = req.body[update]));
     await req.user.save();
 
-    if (!req.user) return res.status(404).send("No such user");
+    if (!req.user) return res.status(404).send({ message: "No such user" });
 
     res.send(req.user);
   } catch (error) {
@@ -62,7 +62,7 @@ router.delete("/me", ensureAuthLocal, async (req, res) => {
       owner_id: req.user._id,
     });
 
-    if (!user) return res.status(404).send("No Such User");
+    if (!user) return res.status(404).send({ message: "No Such User" });
 
     res.send({ user: user, message: "User Deleted Successfully" });
   } catch (error) {
