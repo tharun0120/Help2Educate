@@ -123,7 +123,7 @@ function NavBar(props) {
   return (
     <Container
       fluid="full"
-      style={{ backgroundColor: "#153A2D", paddingBottom: "40px" }}>
+      style={{ backgroundColor: "#153A2D", paddingBottom: "25px" }}>
       <Container fluid="xxl">
         <Navbar
           expand="lg"
@@ -141,7 +141,9 @@ function NavBar(props) {
               className="justify-content-end">
               <Nav
                 className="ml-auto"
-                style={{ display: "flex", alignItems: "center" }}>
+                style={{
+                  display: "flex",
+                }}>
                 <Nav.Link
                   href=""
                   style={{
